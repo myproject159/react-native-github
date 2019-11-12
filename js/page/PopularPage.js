@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
-import {StyleSheet, TouchableOpacity, View, Text, FlatList, RefreshControl} from 'react-native';
-import {connect} from 'react-redux'
-import actions from '../action/index'
+import {StyleSheet, TouchableOpacity, View, Text,FlatList, RefreshControl} from 'react-native'
 import {createAppContainer} from "react-navigation"
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import NavigationUtil from "../navigator/NavigationUtil.js"
-import store from '../store';
-
+import PopularItem from '../common/PopularItem'
+import {connect} from 'react-redux'
+import actions from '../action/index'
 const URL = 'https://api.github.com/search/repositories?q='
 const QUERY_STR = '&sort=stars'
 const THEME_COLOR = 'red'
+
 
 type Props = {};
 
@@ -72,13 +72,15 @@ class PopularTab extends Component<Props> {
     }
     renderItem(data) {
         const item = data.item
-        return <View style={{marginBottom: 10}}>
-            <Text style={{backgroundColor: "#faa"}}>
-                {JSON.stringify(item)}
-            </Text>
-        </View>
+        return <PopularItem
+            item={item}
+            onSelect={()=>{
+
+            }}
+        />
     }
     render() {
+        const {tabLabel} = this.props;
         const {popular} = this.props
         let store = popular[this.storeName]
         if(!store){
@@ -89,7 +91,7 @@ class PopularTab extends Component<Props> {
         }
         return (
             <View>
-                <FlatList
+                 <FlatList
                     data={store.items}
                     renderItem={data => this.renderItem(data)}
                     keyExtractor={item=>""+item.id}
@@ -104,7 +106,6 @@ class PopularTab extends Component<Props> {
                         />
                     }
                 />
-
             </View>
         )
     }
