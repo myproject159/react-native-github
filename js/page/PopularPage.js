@@ -47,7 +47,7 @@ export default class PopularPage extends Component<Props> {
                 }
             )
         )
-        return <View style={{flex:1}}>
+        return <View style={styles.container}>
             <TabNavigator/>
         </View>
     }
@@ -90,7 +90,7 @@ class PopularTab extends Component<Props> {
             }
         }
         return (
-            <View>
+            <View style={styles.container}>
                  <FlatList
                     data={store.items}
                     renderItem={data => this.renderItem(data)}
@@ -121,9 +121,9 @@ const mapDispatchToProps = dispatch => ({
 const PopularTabPage=connect(mapStateToProps,mapDispatchToProps)(PopularTab)
 
 const styles = StyleSheet.create({
-    welcome: {
-        color: '#f00',
-        textAlign: "center"
+
+    container:{
+        flex: 1
     },
     tabStyle:{
         minWidth: 50
